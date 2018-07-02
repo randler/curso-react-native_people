@@ -10,9 +10,13 @@ const Header = (props) => (
 const styles = StyleSheet.create({
     header: {
         marginTop: 24,
-        backgroundColor: '#CCC',
+        backgroundColor: '#00667a',
+        borderColor: '#00667a',
+        borderBottomColor: '#00809b',
+        borderWidth: 3,
         justifyContent: 'center',
         alignItems: 'center',
+        height: 60,
     },
     titleHeader: {
         fontSize: 30,

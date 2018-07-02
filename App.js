@@ -2,28 +2,35 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Header from './src/components/Header';
+import PeopleList from './src/components/PeopleList';
+
+import axios from 'axios';
 
 export default class App extends React.Component {
-    renderList() {
-      const names = [
-        'Jorge',
-        'João de Deus',
-        'Zezé',
-        'Outros'
-      ];
+  
+  constructor(props) {
+    super(props);
 
-      const textElements = names.map(name => {
-        return <Text key={name}>{ name }</Text>
+    this.state = {
+      peoples : []
+    };
+  }
+
+  componentDidMount() {
+    axios.get('https://randomuser.me/api/?nat=br&results=20')
+    .then(response => {
+      const {results} =  response.data;
+      this.setState({
+        peoples: results
       });
-
-      return textElements;
-    }
+    });
+  }
 
   render() {
     return (
       <View>
         <Header title="Horários" />
-        { this.renderList() }
+        <PeopleList peoples={this.state.peoples} />
       </View>
     );
   }
