@@ -1,37 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
-import Header from './src/components/Header';
-import PeopleList from './src/components/PeopleList';
 
-import axios from 'axios';
+import PeoplePage from './src/pages/PeoplePage';
 
-export default class App extends React.Component {
-  
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      peoples : []
-    };
+export default createStackNavigator({
+  'Main': {
+    screen: PeoplePage
   }
-
-  componentDidMount() {
-    axios.get('https://randomuser.me/api/?nat=br&results=20')
-    .then(response => {
-      const {results} =  response.data;
-      this.setState({
-        peoples: results
-      });
-    });
+}, {
+  navigationOptions: {
+    title: 'Vans Conquista',
+    headerStyle: {
+      backgroundColor: '#00667a',
+      borderBottomWidth: 1,
+      borderBottomColor: '#004a59'
+    },
+    headerTitleStyle: {
+      fontSize: 30,
+      color: '#FFF',
+      flex: 1,
+      textAlign: 'center'
+    }
   }
-
-  render() {
-    return (
-      <View>
-        <Header title="Horários" />
-        <PeopleList peoples={this.state.peoples} />
-      </View>
-    );
-  }
-}
+});

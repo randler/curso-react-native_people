@@ -1,33 +1,37 @@
 import React from 'react';
 
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {capitalizeFirstLetter} from '../util/';
 
 const PeopleListItem = props => {  
     const { people } = props; 
     const { first, last } = people.name
-    const { cell, picture } = people
     return (
-        <View style={styles.line}>
-            <Image style={styles.imageLine} source={{uri: picture.medium}} />
-            <View style={styles.info}>
-                <View style={styles.infoLine}>
-                    <Text style={styles.textLine}>
-                        { `${capitalizeFirstLetter(first)} ${capitalizeFirstLetter(last)}` }
-                    </Text>
-                    <Text style={styles.textDownLine}>{ cell }</Text>
-                    <Text style={styles.textLine}>Dias</Text>
-                    <Text style={styles.textDownLine}>S, T, Q, Q, S, S</Text>
-                </View>
-                <View style={styles.infoLine}>
-                    <Text style={styles.textLine}>Para VCA</Text>
-                    <Text style={styles.textDownLine}>07:00</Text>
-                    <Text style={styles.textLine}>Para CS</Text>
-                    <Text style={styles.textDownLine}>09:00</Text>
+        <TouchableOpacity onPress={ () => {
+            console.log('clicou: ', first)
+            } 
+        } >
+            <View style={styles.line}>
+                <Image style={styles.imageLine} source={require('../assets/img/front_1.png')} />
+                <View style={styles.info}>
+                    <View style={styles.infoLine}>
+                        <Text style={styles.textLine}>
+                            { `${capitalizeFirstLetter(first)} ${capitalizeFirstLetter(last)}` }
+                        </Text>
+                        <Text style={styles.textDownLine}>{ people.cell }</Text>
+                        <Text style={styles.textLine}>Dias</Text>
+                        <Text style={styles.textDownLine}>S, T, Q, Q, S, S</Text>
+                    </View>
+                    <View style={styles.infoLine}>
+                        <Text style={styles.textLine}>Para VCA</Text>
+                        <Text style={styles.textDownLine}>07:00</Text>
+                        <Text style={styles.textLine}>Para CS</Text>
+                        <Text style={styles.textDownLine}>09:00</Text>
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -46,6 +50,7 @@ const styles = StyleSheet.create({
     info: {
         flexDirection: 'row',
         alignContent: 'space-between',
+        flex: 5
     },
     infoLine : {
         marginLeft: 10,
@@ -60,9 +65,11 @@ const styles = StyleSheet.create({
         color: '#264e56'
     },
     imageLine: {
-      width: 90,
-      height: 90,
+      aspectRatio: 1,
+      /*width: 90,
+      height: 90,*/
       borderRadius: 5,
+      flex: 1,
     }
 });
 

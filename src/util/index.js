@@ -1,1 +1,1 @@
-export { default as capitalizeFirstLetter } from './apitalizeFirstLetter';
+export { default as capitalizeFirstLetter } from './CapitalizeFirstLetter';
