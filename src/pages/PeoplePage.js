@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , ActivityIndicator} from 'react-native';
 
 import PeopleList from '../components/PeopleList';
 import axios from 'axios';
@@ -10,25 +10,48 @@ export default class PeoplePage extends React.Component {
     super(props);
 
     this.state = {
-      peoples : []
+      peoples : [],
+      loading: false,
     };
   }
 
   componentDidMount() {
-    axios.get('https://randomuser.me/api/?nat=br&results=20')
-    .then(response => {
-      const {results} =  response.data;
-      this.setState({
-        peoples: results
-      });
-    });
+    this.setState({ loading: true });
+      axios.get('https://randomuser.me/api/?nat=br&results=20')
+      .then(response => {
+        const {results} =  response.data;
+        this.setState({
+          peoples: results,
+          loading: false
+        });
+      })
   }
+
+  /*renderLoading() {
+    return this.state.loading ? (<ActivityIndicator size="large" color="#007891" />) : null;
+  }*/
 
   render() {
     return (
-      <View>
-        <PeopleList peoples={this.state.peoples} />
+      <View style={styles.container}>
+        { /*this.renderLoading() */}
+        {
+          this.state.loading ? 
+            <ActivityIndicator size="large" color="#007891" /> 
+            : <PeopleList
+                peoples={this.state.peoples}
+                onPressItem={(page, pageParams) => {
+                  this.props.navigation.navigate(page, pageParams);
+                } } />
+        }
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  }
+});

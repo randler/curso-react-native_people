@@ -5,11 +5,11 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {capitalizeFirstLetter} from '../util/';
 
 const PeopleListItem = props => {  
-    const { people } = props; 
+    const { people, navigateToPeopleDetail } = props; 
     const { first, last } = people.name
     return (
         <TouchableOpacity onPress={ () => {
-            console.log('clicou: ', first)
+            navigateToPeopleDetail('PeopleDetail', { people });
             } 
         } >
             <View style={styles.line}>
