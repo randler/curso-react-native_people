@@ -19,7 +19,7 @@ export default class PeoplePage extends React.Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-      axios.get('https://randomuserTEM_ERRO.me/api/?nat=br&results=20')
+      axios.get('https://randomuser.me/api/?nat=br&results=20')
       .then(response => {
         const {results} =  response.data;
         this.setState({
@@ -35,25 +35,30 @@ export default class PeoplePage extends React.Component {
       })
   }
 
-  /*renderLoading() {
-    return this.state.loading ? (<ActivityIndicator size="large" color="#007891" />) : null;
-  }*/
+  renderPage() {
+    if(this.state.loading) {
+      return <ActivityIndicator size="large" color="#007891" />;
+    }
+
+    if(this.state.error) {
+      return <ErrorComponent reload={() => this.componentDidMount()} />;
+    }
+
+    return (
+      <PeopleList
+        peoples={this.state.peoples}
+        onPressItem={(page, pageParams) => {
+          this.props.navigation.navigate(page, pageParams);
+          } 
+        } 
+      />
+    );
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        { /*this.renderLoading() */}
-        {
-          this.state.loading ? 
-            <ActivityIndicator size="large" color="#007891" /> 
-                : this.state.error 
-                  ?<ErrorComponent reload={() => this.componentDidMount()} /> 
-                  :<PeopleList
-                    peoples={this.state.peoples}
-                    onPressItem={(page, pageParams) => {
-                      this.props.navigation.navigate(page, pageParams);
-                    } } />
-        }
+        { this.renderPage() }
       </View>
     );
   }

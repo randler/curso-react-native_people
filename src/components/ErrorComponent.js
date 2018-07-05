@@ -8,7 +8,8 @@ const ErrorComponent = props => {
             <Image
                 style={styles.error404}
                 source={ require('../assets/img/error_404.png') } />
-            <Text style={styles.errorText} >Erro ao tentar acessar conteúdo</Text>
+            <Text style={[styles.errorText, styles.errorHead]} >Oops!</Text>
+            <Text style={styles.errorText} >Não consigo acessar o conteúdo</Text>
             <Button 
                 title="Tentar novamente!"
                 onPress={props.reload}
@@ -23,10 +24,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
     },
+    errorHead: {
+        fontSize: 40,
+        color: '#FF0000'
+    },
     errorText: {
         fontSize: 20,
         marginBottom: 5,
-        color: '#007891'
+        color: '#ff3d3d'
     },
     error404: {
         margin: 5,
