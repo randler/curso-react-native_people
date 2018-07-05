@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View , ActivityIndicator} from 'react-native';
 
 import PeopleList from '../components/PeopleList';
+import ErrorComponent from '../components/ErrorComponent';
 import axios from 'axios';
 
 export default class PeoplePage extends React.Component {
@@ -12,17 +13,24 @@ export default class PeoplePage extends React.Component {
     this.state = {
       peoples : [],
       loading: false,
+      error: false
     };
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-      axios.get('https://randomuser.me/api/?nat=br&results=20')
+      axios.get('https://randomuserTEM_ERRO.me/api/?nat=br&results=20')
       .then(response => {
         const {results} =  response.data;
         this.setState({
           peoples: results,
           loading: false
+        });
+      })
+      .catch(error =>{
+        this.setState({ 
+          error: true, 
+          loading: false 
         });
       })
   }
@@ -38,11 +46,13 @@ export default class PeoplePage extends React.Component {
         {
           this.state.loading ? 
             <ActivityIndicator size="large" color="#007891" /> 
-            : <PeopleList
-                peoples={this.state.peoples}
-                onPressItem={(page, pageParams) => {
-                  this.props.navigation.navigate(page, pageParams);
-                } } />
+                : this.state.error 
+                  ?<ErrorComponent reload={() => this.componentDidMount()} /> 
+                  :<PeopleList
+                    peoples={this.state.peoples}
+                    onPressItem={(page, pageParams) => {
+                      this.props.navigation.navigate(page, pageParams);
+                    } } />
         }
       </View>
     );
